@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Browser Code Editor Demo</title>
+  <style>
+    body { margin: 0; min-height: 100vh; background: #070914; color: #f8fbff; font-family: Inter, Arial, sans-serif; }
+    main { width: min(1120px, calc(100% - 28px)); margin: 0 auto; padding: 28px 0; }
+    a, button { color: #22d3ee; font-weight: 800; }
+    .editor { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 20px; }
+    textarea, iframe { width: 100%; min-height: 420px; border: 1px solid rgba(255,255,255,.14); border-radius: 14px; background: rgba(255,255,255,.08); color: white; }
+    textarea { padding: 16px; font-family: Consolas, monospace; }
+    iframe { background: white; }
+    button { margin-top: 14px; padding: 12px 16px; border: 1px solid rgba(34,211,238,.35); border-radius: 12px; background: rgba(34,211,238,.1); cursor: pointer; }
+    @media (max-width: 760px) { .editor { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <main>
+    <a href="../index.html#projects">Back to portfolio</a>
+    <h1>Browser Based Code Editor Demo</h1>
+    <p>Write HTML and see the live preview instantly.</p>
+    <div class="editor">
+      <textarea id="code"><h1>Hello from Shreya's editor</h1>
+<p>This live preview runs directly in the browser.</p>
+<button>Sample Button</button></textarea>
+      <iframe id="preview" title="Live preview"></iframe>
+    </div>
+    <button id="download">Download Code</button>
+  </main>
+  <script>
+    const code = document.querySelector("#code");
+    const preview = document.querySelector("#preview");
+    const download = document.querySelector("#download");
+    function run() { preview.srcdoc = code.value; }
+    code.addEventListener("input", run);
+    download.addEventListener("click", () => {
+      const blob = new Blob([code.value], { type: "text/html" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "code-editor-output.html";
+      link.click();
+      URL.revokeObjectURL(link.href);
+    });
+    run();
+  </script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Weather Dashboard Demo</title>
+  <style>
+    body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: #08111f; color: #f8fbff; font-family: Inter, Arial, sans-serif; }
+    main { width: min(920px, calc(100% - 28px)); padding: 28px; border: 1px solid rgba(255,255,255,.14); border-radius: 18px; background: rgba(255,255,255,.08); box-shadow: 0 24px 70px rgba(0,0,0,.35); }
+    a { color: #22d3ee; font-weight: 800; }
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 22px; }
+    .card { padding: 18px; border-radius: 14px; background: linear-gradient(135deg, rgba(124,92,255,.28), rgba(34,211,238,.16)); }
+    input { width: 100%; height: 48px; margin-top: 16px; padding: 0 14px; border: 1px solid rgba(255,255,255,.18); border-radius: 12px; background: rgba(0,0,0,.25); color: white; }
+    @media (max-width: 680px) { .grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <main>
+    <a href="../index.html#projects">Back to portfolio</a>
+    <h1>Weather Dashboard Demo</h1>
+    <p>A front-end preview of the weather dashboard project with city search and responsive weather cards.</p>
+    <input id="citySearch" type="search" placeholder="Search city, e.g. Kanpur" />
+    <section class="grid" id="cards"></section>
+  </main>
+  <script>
+    const data = [
+      { city: "Kanpur", temp: "31°C", condition: "Clear" },
+      { city: "Delhi", temp: "34°C", condition: "Sunny" },
+      { city: "Bengaluru", temp: "25°C", condition: "Cloudy" }
+    ];
+    const cards = document.querySelector("#cards");
+    const search = document.querySelector("#citySearch");
+    function render(query = "") {
+      cards.innerHTML = data
+        .filter((item) => item.city.toLowerCase().includes(query.toLowerCase()))
+        .map((item) => `<article class="card"><h2>${item.city}</h2><strong>${item.temp}</strong><p>${item.condition}</p></article>`)
+        .join("") || "<p>No city found.</p>";
+    }
+    search.addEventListener("input", () => render(search.value));
+    render();
+  </script>
+</body>
+</html>
