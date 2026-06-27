@@ -68,7 +68,7 @@ const projects = [
       "Real-time weather dashboard using asynchronous JavaScript and a weather REST API for five-day forecasts and geolocation-based updates.",
     technologies: ["JavaScript (ES6)", "HTML5", "CSS3", "REST API", "Fetch API"],
     features: ["Sub-second rendering", "Five-day forecasts", "Geolocation updates", "Dynamic condition-based theming", "Error handling across 10+ weather states"],
-    live: "projects/weather-dashboard.html",
+    live: "https://shreyagupta5.github.io/WeatherDashboard/",
     actionLabel: "Live Demo"
   },
   {
@@ -80,7 +80,7 @@ const projects = [
       "Zero-dependency browser-native editor for HTML, CSS, and JavaScript with sandboxed iframe execution and real-time preview.",
     technologies: ["JavaScript", "DOM APIs", "HTML5", "CSS3"],
     features: ["Sandboxed iframe execution", "Real-time live preview", "One-click export", "Dark/light theme", "Responsive layout"],
-    live: "projects/code-editor.html",
+    live: "https://shreyagupta5.github.io/Browser_Based_Code_Editor/",
     actionLabel: "Live Demo"
   },
   {
