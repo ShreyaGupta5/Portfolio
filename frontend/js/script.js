@@ -1,8 +1,9 @@
 const titles = [
   "Full-Stack Developer",
-  "React.js Developer",
+  "Python Flask Developer",
+  "AI-Integrated Systems Developer",
   "Software Engineer",
-  "Hardware & Embedded Systems Learner",
+  "Embedded Systems Engineer",
   "ECE Student",
   "Problem Solver"
 ];
@@ -12,42 +13,63 @@ const skills = {
     ["HTML5", 92],
     ["CSS3", 90],
     ["JavaScript (ES6+)", 86],
-    ["React.js", 82],
+    ["Fetch API & Promises", 84],
+    ["DOM APIs", 86],
     ["Responsive Web Design", 90]
   ],
   backend: [
-    ["Node.js", 80],
-    ["Express.js", 78],
-    ["RESTful APIs", 84]
+    ["Python Flask", 86],
+    ["RESTful APIs", 86],
+    ["API Integration", 84]
   ],
   database: [
-    ["MySQL", 80]
+    ["MySQL", 84],
+    ["SQL Query Optimisation", 80],
+    ["Relational Database Design", 82]
   ],
   cloud: [
-    ["AWS Cloud", 72],
+    ["Render Deployment", 84],
     ["Git", 84],
     ["GitHub", 86]
   ],
   programming: [
-    ["C", 82],
-    ["Python", 86],
+    ["Python", 88],
     ["Java", 74],
-    ["Data Structures & Algorithms", 78]
+    ["C", 82]
+  ],
+  ece: [
+    ["Embedded Systems", 86],
+    ["VLSI Design", 80],
+    ["RF Communication", 86],
+    ["PCB-Level Circuit Design", 82],
+    ["UAV Systems", 84]
   ]
 };
 
 const projects = [
+  {
+    title: "AI Smart Agriculture Assistant",
+    category: ["web", "api", "ai"],
+    shot: "AI Agriculture",
+    image: "assets/project-ai-agriculture.webp",
+    description:
+      "Production-deployed 3-tier AI agriculture platform with an NLP interface for crop diagnostics, weather-adaptive recommendations, and pest-management support.",
+    technologies: ["Python", "Flask", "MySQL", "REST APIs", "JavaScript", "Render"],
+    features: ["Under 2s query resolution", "Two real-time third-party APIs", "Intent-based query routing", "About 30% faster database responses", "99%+ deployment uptime"],
+    live: "projects/ai-agriculture.html",
+    actionLabel: "Project Overview"
+  },
   {
     title: "Weather Dashboard",
     category: ["web", "api"],
     shot: "Weather API",
     image: "assets/project-weather-dashboard.webp",
     description:
-      "Developed a real-time weather dashboard using OpenWeatherMap API to fetch and display live weather information for multiple cities with a scalable full-stack upgrade path.",
-    technologies: ["React.js", "JavaScript", "REST API", "Node.js", "AWS"],
-    features: ["Live weather updates", "Dynamic city search", "Responsive design", "Real-time API integration"],
+      "Real-time weather dashboard using asynchronous JavaScript and a weather REST API for five-day forecasts and geolocation-based updates.",
+    technologies: ["JavaScript (ES6)", "HTML5", "CSS3", "REST API", "Fetch API"],
+    features: ["Sub-second rendering", "Five-day forecasts", "Geolocation updates", "Dynamic condition-based theming", "Error handling across 10+ weather states"],
     live: "projects/weather-dashboard.html",
-    repo: ""
+    actionLabel: "Live Demo"
   },
   {
     title: "Browser Based Code Editor",
@@ -55,23 +77,23 @@ const projects = [
     shot: "Live Editor",
     image: "assets/project-code-editor.webp",
     description:
-      "Created a lightweight code editor that allows users to write and execute HTML, CSS, and JavaScript with live preview functionality and developer-focused tooling.",
-    technologies: ["React.js", "JavaScript", "HTML5", "CSS3", "GitHub"],
-    features: ["Live preview", "Theme toggle", "Code download", "Real-time execution"],
+      "Zero-dependency browser-native editor for HTML, CSS, and JavaScript with sandboxed iframe execution and real-time preview.",
+    technologies: ["JavaScript", "DOM APIs", "HTML5", "CSS3"],
+    features: ["Sandboxed iframe execution", "Real-time live preview", "One-click export", "Dark/light theme", "Responsive layout"],
     live: "projects/code-editor.html",
-    repo: ""
+    actionLabel: "Live Demo"
   },
   {
-    title: "RF Transmission Drone",
+    title: "RF Transmission Drone (UAV)",
     category: ["hardware"],
     shot: "RF Drone",
     image: "assets/project-rf-drone.webp",
     description:
-      "Designed and assembled a hardware-based RF-controlled drone using transmitter-receiver modules and a KK 2.1.5 flight controller for wireless control and stable flight.",
-    technologies: ["RF Communication", "Transmitter-Receiver Modules", "KK 2.1.5 Flight Controller", "Circuit Debugging", "Hardware Integration"],
-    features: ["RF signal transmission and reception", "Flight controller calibration", "Motor and ESC wiring", "Flight stability optimization", "Circuit debugging and testing"],
+      "Designed, assembled, and field-tested an RF-controlled UAV with a KK 2.1.5 flight controller and 2.4 GHz wireless modules.",
+    technologies: ["Arduino", "RF Communication", "Embedded Systems", "PCB Design", "UAV Systems"],
+    features: ["Stable flight over 50m range", "Three hardware iteration cycles", "PCB-level circuit testing", "Firmware calibration", "40% better RF signal reliability"],
     live: "",
-    repo: ""
+    actionLabel: "Hardware Project"
   }
 ];
 
@@ -272,11 +294,11 @@ function createProjectCard(project) {
             project.live
               ? `<a class="btn btn-primary" href="${project.live}" target="_blank" rel="noopener">
                   <i data-lucide="external-link"></i>
-                  Live Demo
+                  ${project.actionLabel || "Live Demo"}
                 </a>`
               : `<span class="hardware-label">
                   <i data-lucide="cpu"></i>
-                  Hardware Project
+                  ${project.actionLabel || "Hardware Project"}
                 </span>`
           }
       </div>
