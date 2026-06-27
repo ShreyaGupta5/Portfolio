@@ -56,8 +56,8 @@ const projects = [
       "Production-deployed 3-tier AI agriculture platform with an NLP interface for crop diagnostics, weather-adaptive recommendations, and pest-management support.",
     technologies: ["Python", "Flask", "MySQL", "REST APIs", "JavaScript", "Render"],
     features: ["Under 2s query resolution", "Two real-time third-party APIs", "Intent-based query routing", "About 30% faster database responses", "99%+ deployment uptime"],
-    live: "projects/ai-agriculture.html",
-    actionLabel: "Project Overview"
+    live: "https://ai-smart-agriculture-assistant.onrender.com/",
+    actionLabel: "Live Demo"
   },
   {
     title: "Weather Dashboard",
