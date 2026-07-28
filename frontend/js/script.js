@@ -12,36 +12,49 @@ const skills = {
   frontend: [
     ["HTML5", 92],
     ["CSS3", 90],
-    ["JavaScript (ES6+)", 86],
+    ["JavaScript (ES6)", 88],
+    ["React", 80],
     ["Fetch API & Promises", 84],
-    ["DOM APIs", 86],
-    ["Responsive Web Design", 90]
+    ["DOM APIs", 86]
   ],
   backend: [
     ["Python Flask", 86],
+    ["Node.js", 78],
     ["RESTful APIs", 86],
     ["API Integration", 84]
   ],
   database: [
     ["MySQL", 84],
-    ["SQL Query Optimisation", 80],
+    ["SQL Query Optimization", 80],
     ["Relational Database Design", 82]
+  ],
+  ai: [
+    ["Prompt Engineering", 84],
+    ["Data Preprocessing", 80],
+    ["Model Development", 78],
+    ["NumPy, Pandas & Matplotlib", 78],
+    ["Scikit-Learn", 76]
   ],
   cloud: [
     ["Render Deployment", 84],
     ["Git", 84],
-    ["GitHub", 86]
+    ["GitHub", 86],
+    ["VS Code", 90]
   ],
   programming: [
     ["Python", 88],
     ["Java", 74],
-    ["C", 82]
+    ["C", 82],
+    ["Problem Solving", 86],
+    ["Agile Collaboration", 80]
   ],
   ece: [
     ["Embedded Systems", 86],
     ["VLSI Design", 80],
     ["RF Communication", 86],
     ["PCB-Level Circuit Design", 82],
+    ["Arduino", 84],
+    ["MATLAB & Multisim", 78],
     ["UAV Systems", 84]
   ]
 };
@@ -69,18 +82,6 @@ const projects = [
     technologies: ["JavaScript (ES6)", "HTML5", "CSS3", "REST API", "Fetch API"],
     features: ["Sub-second rendering", "Five-day forecasts", "Geolocation updates", "Dynamic condition-based theming", "Error handling across 10+ weather states"],
     live: "https://shreyagupta5.github.io/WeatherDashboard/",
-    actionLabel: "Live Demo"
-  },
-  {
-    title: "Browser Based Code Editor",
-    category: ["web"],
-    shot: "Live Editor",
-    image: "assets/project-code-editor.webp",
-    description:
-      "Zero-dependency browser-native editor for HTML, CSS, and JavaScript with sandboxed iframe execution and real-time preview.",
-    technologies: ["JavaScript", "DOM APIs", "HTML5", "CSS3"],
-    features: ["Sandboxed iframe execution", "Real-time live preview", "One-click export", "Dark/light theme", "Responsive layout"],
-    live: "https://shreyagupta5.github.io/Browser_Based_Code_Editor/",
     actionLabel: "Live Demo"
   },
   {

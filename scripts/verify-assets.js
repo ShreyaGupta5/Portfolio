@@ -9,7 +9,6 @@ const requiredFiles = [
   "frontend/assets/shreya-gupta-photo.webp",
   "frontend/assets/project-ai-agriculture.webp",
   "frontend/assets/project-weather-dashboard.webp",
-  "frontend/assets/project-code-editor.webp",
   "frontend/assets/project-rf-drone.webp",
   "frontend/projects/ai-agriculture.html"
 ];
