@@ -325,6 +325,7 @@ function setupContactForm() {
     const payload = {
       name: contactForm.elements.name.value.trim(),
       email: contactForm.elements.email.value.trim(),
+      subject: contactForm.elements.subject.value.trim(),
       message: contactForm.elements.message.value.trim()
     };
 
@@ -358,8 +359,8 @@ async function submitContact(payload) {
     formStatus.className = "form-status success";
     contactForm.reset();
   } catch (error) {
-    const subject = encodeURIComponent(`Portfolio contact from ${payload.name}`);
-    const body = encodeURIComponent(`Name: ${payload.name}\nEmail: ${payload.email}\n\n${payload.message}`);
+    const subject = encodeURIComponent(payload.subject || `Portfolio contact from ${payload.name}`);
+    const body = encodeURIComponent(`Name: ${payload.name}\nEmail: ${payload.email}\nSubject: ${payload.subject}\n\n${payload.message}`);
     window.location.href = `mailto:guptashreya5905@gmail.com?subject=${subject}&body=${body}`;
     formStatus.textContent = "API unavailable in static preview. Opening email fallback.";
     formStatus.className = "form-status success";
@@ -401,6 +402,11 @@ function validateContact(payload) {
 
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.email)) {
     showError("email", "Please enter a valid email address.");
+    isValid = false;
+  }
+
+  if (payload.subject.length < 3) {
+    showError("subject", "Please enter a clear subject.");
     isValid = false;
   }
 

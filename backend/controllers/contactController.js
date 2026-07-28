@@ -7,6 +7,7 @@ function isValidEmail(email) {
 function validateContact(payload) {
   const name = payload.name?.trim();
   const email = payload.email?.trim();
+  const subject = payload.subject?.trim();
   const message = payload.message?.trim();
 
   if (!name || name.length < 2) {
@@ -15,6 +16,10 @@ function validateContact(payload) {
 
   if (!email || !isValidEmail(email)) {
     return "A valid email is required";
+  }
+
+  if (!subject || subject.length < 3) {
+    return "Subject must be at least 3 characters";
   }
 
   if (!message || message.length < 10) {
@@ -43,6 +48,7 @@ async function createContact(req, res, next) {
       id: contacts.length + 1,
       name: req.body.name.trim(),
       email: req.body.email.trim(),
+      subject: req.body.subject.trim(),
       message: req.body.message.trim(),
       created_at: new Date().toISOString()
     };
