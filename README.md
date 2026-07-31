@@ -43,6 +43,22 @@ GET  /api/contact
 GET  /api/health
 ```
 
+## Contact Email Setup
+
+The contact form stores each message through `/api/contact`. To receive those messages by email, add SMTP variables in `backend/.env` locally and in Render Environment Variables:
+
+```bash
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=465
+SMTP_SECURE=true
+SMTP_USER=guptashreya5905@gmail.com
+SMTP_PASS=your_gmail_app_password
+CONTACT_RECEIVER_EMAIL=guptashreya5905@gmail.com
+CONTACT_FROM_EMAIL=guptashreya5905@gmail.com
+```
+
+For Gmail, create an App Password from Google Account security settings and use that value for `SMTP_PASS`. Do not use your normal Gmail password.
+
 ## Render Deployment
 
 Create a Render Web Service from this repository.

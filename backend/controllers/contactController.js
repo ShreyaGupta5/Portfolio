@@ -1,4 +1,5 @@
 const contacts = [];
+const { sendContactEmail } = require("../services/mailService");
 
 function isValidEmail(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -55,9 +56,24 @@ async function createContact(req, res, next) {
 
     contacts.unshift(contact);
 
-    res.status(201).json({
-      message: "Message received successfully",
-      contact
+    let emailResult;
+    try {
+      emailResult = await sendContactEmail(contact);
+    } catch (emailError) {
+      console.error("Email delivery failed:", emailError.message);
+      return res.status(502).json({
+        message: "Message saved, but email could not be delivered. Please use the email button.",
+        contact,
+        emailSent: false
+      });
+    }
+
+    res.status(emailResult.sent ? 201 : 202).json({
+      message: emailResult.sent
+        ? "Message sent successfully to Shreya."
+        : "Message saved, but email delivery is not configured yet.",
+      contact,
+      emailSent: emailResult.sent
     });
   } catch (error) {
     next(error);

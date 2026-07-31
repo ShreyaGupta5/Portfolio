@@ -356,7 +356,13 @@ async function submitContact(payload) {
       throw new Error(data.message || "Message could not be sent");
     }
 
-    formStatus.textContent = "Message sent successfully.";
+    if (data.emailSent === false) {
+      formStatus.textContent = "Message saved, but email delivery is not configured. Please use the Email button too.";
+      formStatus.className = "form-status error";
+      return;
+    }
+
+    formStatus.textContent = "Message sent successfully to Shreya.";
     formStatus.className = "form-status success";
     contactForm.reset();
   } catch (error) {
