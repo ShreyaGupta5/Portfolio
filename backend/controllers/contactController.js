@@ -1,5 +1,5 @@
 const contacts = [];
-const { getMissingMailConfig, isEmailConfigured, sendContactEmail } = require("../services/mailService");
+const { getMissingMailConfig, isEmailConfigured, sendContactEmail, verifyMailConnection } = require("../services/mailService");
 
 function isValidEmail(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -40,12 +40,14 @@ async function getContacts(req, res, next) {
 
 async function getMailStatus(req, res, next) {
   try {
-    const missing = getMissingMailConfig();
+    const status = await verifyMailConnection();
 
     res.json({
-      configured: isEmailConfigured(),
-      missing,
-      receiver: process.env.CONTACT_RECEIVER_EMAIL || null
+      configured: status.configured,
+      verified: status.verified,
+      missing: status.missing,
+      receiver: process.env.CONTACT_RECEIVER_EMAIL || process.env.SMTP_USER || null,
+      error: status.error || null
     });
   } catch (error) {
     next(error);
@@ -79,7 +81,8 @@ async function createContact(req, res, next) {
         message: "Email delivery failed. Please check SMTP credentials in Render environment variables.",
         contact,
         emailSent: false,
-        configured: isEmailConfigured()
+        configured: false,
+        error: emailError.message
       });
     }
 

@@ -1,6 +1,6 @@
 const nodemailer = require("nodemailer");
 
-const REQUIRED_MAIL_ENV = ["SMTP_HOST", "SMTP_PORT", "SMTP_USER", "SMTP_PASS", "CONTACT_RECEIVER_EMAIL"];
+const REQUIRED_MAIL_ENV = ["SMTP_USER", "SMTP_PASS"];
 
 function getMissingMailConfig() {
   return REQUIRED_MAIL_ENV.filter((key) => !process.env[key]);
@@ -11,10 +11,12 @@ function isEmailConfigured() {
 }
 
 function createTransporter() {
+  const port = Number(process.env.SMTP_PORT || 465);
+
   return nodemailer.createTransport({
-    host: process.env.SMTP_HOST,
-    port: Number(process.env.SMTP_PORT),
-    secure: process.env.SMTP_SECURE === "true",
+    host: process.env.SMTP_HOST || "smtp.gmail.com",
+    port,
+    secure: process.env.SMTP_SECURE ? process.env.SMTP_SECURE === "true" : port === 465,
     auth: {
       user: process.env.SMTP_USER,
       pass: process.env.SMTP_PASS
@@ -23,7 +25,7 @@ function createTransporter() {
 }
 
 function createContactEmail(contact) {
-  const receiverEmail = process.env.CONTACT_RECEIVER_EMAIL;
+  const receiverEmail = process.env.CONTACT_RECEIVER_EMAIL || process.env.SMTP_USER;
   const fromEmail = process.env.CONTACT_FROM_EMAIL || process.env.SMTP_USER;
 
   return {
@@ -69,6 +71,46 @@ async function sendContactEmail(contact) {
   };
 }
 
+async function verifyMailConnection() {
+  if (!isEmailConfigured()) {
+    return {
+      configured: false,
+      verified: false,
+      missing: getMissingMailConfig()
+    };
+  }
+
+  try {
+    const transporter = createTransporter();
+    await transporter.verify();
+
+    return {
+      configured: true,
+      verified: true,
+      missing: []
+    };
+  } catch (error) {
+    return {
+      configured: false,
+      verified: false,
+      missing: [],
+      error: normalizeMailError(error)
+    };
+  }
+}
+
+function normalizeMailError(error) {
+  if (error?.code === "EAUTH") {
+    return "SMTP authentication failed. Use a valid Gmail App Password for SMTP_PASS.";
+  }
+
+  if (error?.code === "ECONNECTION" || error?.code === "ETIMEDOUT") {
+    return "SMTP connection failed. Check SMTP_HOST, SMTP_PORT, and Render network access.";
+  }
+
+  return error?.message || "SMTP verification failed.";
+}
+
 function escapeHtml(value) {
   return String(value)
     .replace(/&/g, "&amp;")
@@ -81,5 +123,6 @@ function escapeHtml(value) {
 module.exports = {
   getMissingMailConfig,
   isEmailConfigured,
-  sendContactEmail
+  sendContactEmail,
+  verifyMailConnection
 };

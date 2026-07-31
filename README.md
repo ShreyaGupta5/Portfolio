@@ -58,15 +58,15 @@ CONTACT_RECEIVER_EMAIL=guptashreya5905@gmail.com
 CONTACT_FROM_EMAIL=guptashreya5905@gmail.com
 ```
 
-For Gmail, create an App Password from Google Account security settings and use that value for `SMTP_PASS`. Do not use your normal Gmail password.
+For Gmail, create an App Password from Google Account security settings and use that value for `SMTP_PASS`. Do not use your normal Gmail password. `SMTP_HOST`, `SMTP_PORT`, and `SMTP_SECURE` default to Gmail values if omitted.
 
 After deployment, open `/api/contact/mail-status` on your Render URL. It should show:
 
 ```json
-{"configured":true,"missing":[],"receiver":"guptashreya5905@gmail.com"}
+{"configured":true,"verified":true,"missing":[],"receiver":"guptashreya5905@gmail.com","error":null}
 ```
 
-If `configured` is `false`, email cannot be delivered yet. Add the missing variables in Render and redeploy.
+If `configured` or `verified` is `false`, email cannot be delivered yet. Add the missing variables, fix the Gmail App Password, and redeploy.
 
 ## Render Deployment
 
