@@ -966,6 +966,27 @@ h3 {
   padding: 20px;
 }
 
+.timeline-date {
+  display: inline-flex;
+  margin-bottom: 10px;
+  color: var(--accent);
+  font-size: 0.84rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.timeline-list {
+  display: grid;
+  gap: 8px;
+  margin: 12px 0 0;
+  padding-left: 18px;
+  color: var(--muted);
+}
+
+.timeline-list li::marker {
+  color: var(--primary);
+}
+
 .timeline-item p,
 .education-card p,
 .contact-copy p {
