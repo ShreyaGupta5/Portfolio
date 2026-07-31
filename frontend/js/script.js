@@ -324,10 +324,10 @@ function setupContactForm() {
     clearErrors();
 
     const payload = {
-      name: contactForm.elements.name.value.trim(),
-      email: contactForm.elements.email.value.trim(),
-      subject: contactForm.elements.subject.value.trim(),
-      message: contactForm.elements.message.value.trim()
+      name: getContactField("name").value.trim(),
+      email: getContactField("email").value.trim(),
+      subject: getContactField("subject").value.trim(),
+      message: getContactField("message").value.trim()
     };
 
     if (!validateContact(payload)) {
@@ -420,8 +420,12 @@ function validateContact(payload) {
 }
 
 function showError(fieldName, message) {
-  const field = contactForm.elements[fieldName];
+  const field = getContactField(fieldName);
   field.closest(".form-row").querySelector(".error-message").textContent = message;
+}
+
+function getContactField(fieldName) {
+  return contactForm.querySelector(`[name="${fieldName}"]`);
 }
 
 function clearErrors() {
