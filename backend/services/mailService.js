@@ -79,5 +79,7 @@ function escapeHtml(value) {
 }
 
 module.exports = {
+  getMissingMailConfig,
+  isEmailConfigured,
   sendContactEmail
 };

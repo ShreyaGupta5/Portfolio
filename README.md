@@ -40,6 +40,7 @@ The contact API runs at:
 ```text
 POST /api/contact
 GET  /api/contact
+GET  /api/contact/mail-status
 GET  /api/health
 ```
 
@@ -58,6 +59,14 @@ CONTACT_FROM_EMAIL=guptashreya5905@gmail.com
 ```
 
 For Gmail, create an App Password from Google Account security settings and use that value for `SMTP_PASS`. Do not use your normal Gmail password.
+
+After deployment, open `/api/contact/mail-status` on your Render URL. It should show:
+
+```json
+{"configured":true,"missing":[],"receiver":"guptashreya5905@gmail.com"}
+```
+
+If `configured` is `false`, email cannot be delivered yet. Add the missing variables in Render and redeploy.
 
 ## Render Deployment
 

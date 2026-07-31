@@ -1,5 +1,5 @@
 const contacts = [];
-const { sendContactEmail } = require("../services/mailService");
+const { getMissingMailConfig, isEmailConfigured, sendContactEmail } = require("../services/mailService");
 
 function isValidEmail(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -38,6 +38,20 @@ async function getContacts(req, res, next) {
   }
 }
 
+async function getMailStatus(req, res, next) {
+  try {
+    const missing = getMissingMailConfig();
+
+    res.json({
+      configured: isEmailConfigured(),
+      missing,
+      receiver: process.env.CONTACT_RECEIVER_EMAIL || null
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
 async function createContact(req, res, next) {
   try {
     const validationError = validateContact(req.body);
@@ -62,18 +76,28 @@ async function createContact(req, res, next) {
     } catch (emailError) {
       console.error("Email delivery failed:", emailError.message);
       return res.status(502).json({
-        message: "Message saved, but email could not be delivered. Please use the email button.",
+        message: "Email delivery failed. Please check SMTP credentials in Render environment variables.",
         contact,
-        emailSent: false
+        emailSent: false,
+        configured: isEmailConfigured()
       });
     }
 
-    res.status(emailResult.sent ? 201 : 202).json({
-      message: emailResult.sent
-        ? "Message sent successfully to Shreya."
-        : "Message saved, but email delivery is not configured yet.",
+    if (!emailResult.sent) {
+      return res.status(503).json({
+        message: "Email service is not configured. Add SMTP variables in Render, then redeploy.",
+        contact,
+        emailSent: false,
+        configured: false,
+        missing: getMissingMailConfig()
+      });
+    }
+
+    res.status(201).json({
+      message: "Message sent successfully to Shreya.",
       contact,
-      emailSent: emailResult.sent
+      emailSent: true,
+      configured: true
     });
   } catch (error) {
     next(error);
@@ -82,5 +106,6 @@ async function createContact(req, res, next) {
 
 module.exports = {
   getContacts,
+  getMailStatus,
   createContact
 };

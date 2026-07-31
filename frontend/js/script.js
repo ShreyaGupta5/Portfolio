@@ -353,11 +353,13 @@ async function submitContact(payload) {
 
     const data = await response.json();
     if (!response.ok) {
-      throw new Error(data.message || "Message could not be sent");
+      formStatus.textContent = data.message || "Message could not be sent. Please try the Email button.";
+      formStatus.className = "form-status error";
+      return;
     }
 
     if (data.emailSent === false) {
-      formStatus.textContent = "Message saved, but email delivery is not configured. Please use the Email button too.";
+      formStatus.textContent = data.message || "Email delivery is not configured. Please use the Email button too.";
       formStatus.className = "form-status error";
       return;
     }
@@ -369,9 +371,8 @@ async function submitContact(payload) {
     const subject = encodeURIComponent(payload.subject || `Portfolio contact from ${payload.name}`);
     const body = encodeURIComponent(`Name: ${payload.name}\nEmail: ${payload.email}\nSubject: ${payload.subject}\n\n${payload.message}`);
     window.location.href = `mailto:guptashreya5905@gmail.com?subject=${subject}&body=${body}`;
-    formStatus.textContent = "API unavailable in static preview. Opening email fallback.";
-    formStatus.className = "form-status success";
-    contactForm.reset();
+    formStatus.textContent = "Backend unavailable. Opening email fallback.";
+    formStatus.className = "form-status error";
   } finally {
     submitButton.disabled = false;
   }
